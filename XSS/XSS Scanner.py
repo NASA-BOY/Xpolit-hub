@@ -4,6 +4,8 @@ import time
 import sys
 from colorama import Fore, Back, Style
 
+# hack_in_the... XSS scanner
+
 colorama.init()
 header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
 print(Fore.GREEN + "XSS SCANNER" + Fore.RED + "Xploit Hub" + Style.RESET_ALL)
