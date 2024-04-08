@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
 
 
 class Ui_StackedWidget(object):
@@ -31,7 +32,7 @@ class Ui_StackedWidget(object):
         sizePolicy.setHeightForWidth(self.logo_main.sizePolicy().hasHeightForWidth())
         self.logo_main.setSizePolicy(sizePolicy)
         self.logo_main.setText("")
-        self.logo_main.setPixmap(QtGui.QPixmap("imgs/logos/xploit-hub-logo-nobg.png"))
+        self.logo_main.setPixmap(QtGui.QPixmap("GUI/imgs/logos/xploit-hub-logo-nobg.png"))
         self.logo_main.setScaledContents(True)
         self.logo_main.setObjectName("logo_main")
         self.horizontalLayout_10.addWidget(self.logo_main)
@@ -103,7 +104,7 @@ class Ui_StackedWidget(object):
         sizePolicy.setHeightForWidth(self.logo_sign_in.sizePolicy().hasHeightForWidth())
         self.logo_sign_in.setSizePolicy(sizePolicy)
         self.logo_sign_in.setText("")
-        self.logo_sign_in.setPixmap(QtGui.QPixmap("imgs/logos/xploit-hub-logo-nobg.png"))
+        self.logo_sign_in.setPixmap(QtGui.QPixmap("GUI/imgs/logos/xploit-hub-logo-nobg.png"))
         self.logo_sign_in.setScaledContents(True)
         self.logo_sign_in.setObjectName("logo_sign_in")
         self.horizontalLayout_4.addWidget(self.logo_sign_in)
@@ -223,7 +224,7 @@ class Ui_StackedWidget(object):
         sizePolicy.setHeightForWidth(self.logo_sign_up.sizePolicy().hasHeightForWidth())
         self.logo_sign_up.setSizePolicy(sizePolicy)
         self.logo_sign_up.setText("")
-        self.logo_sign_up.setPixmap(QtGui.QPixmap("imgs/logos/xploit-hub-logo-nobg.png"))
+        self.logo_sign_up.setPixmap(QtGui.QPixmap("GUI/imgs/logos/xploit-hub-logo-nobg.png"))
         self.logo_sign_up.setScaledContents(True)
         self.logo_sign_up.setObjectName("logo_sign_up")
         self.horizontalLayout_11.addWidget(self.logo_sign_up)
@@ -414,11 +415,16 @@ class Ui_StackedWidget(object):
     def load_sign_up_page(self):
         StackedWidget.setCurrentWidget(self.sign_up_page)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    StackedWidget = QtWidgets.QStackedWidget()
-    ui = Ui_StackedWidget()
-    ui.setupUi(StackedWidget)
+
+app = QtWidgets.QApplication(sys.argv)
+StackedWidget = QtWidgets.QStackedWidget()
+ui = Ui_StackedWidget()
+ui.setupUi(StackedWidget)
+# StackedWidget.show()
+# sys.exit(app.exec_())
+
+
+def start_log_in_window():
+    global StackedWidget
     StackedWidget.show()
     sys.exit(app.exec_())
