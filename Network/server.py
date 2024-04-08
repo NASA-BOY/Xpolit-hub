@@ -1,6 +1,6 @@
 import socket
 import select
-from XSS import good_XSS
+from Vulnerabilities.XSS import good_XSS
 
 MAX_MSG_LENGTH = 1024
 SERVER_PORT = 5555
