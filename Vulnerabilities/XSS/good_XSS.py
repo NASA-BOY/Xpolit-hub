@@ -1,9 +1,10 @@
 import os
-from pprint import pprint
+import pprint
 import requests
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 import colorama
+
 
 os.system("clear")
 
@@ -51,25 +52,29 @@ def submit_form(form_details, url, value):
 
 def scan_xss(url):
     XSS_list  = []
+    result = "No XSS found"
+    XSS_found = False
     forms = get_all_forms(url)
-    print(f"[+] Detected {len(forms)} forms on {url}.")
+    # print(f"[+] Detected {len(forms)} forms on {url}.")
     for form in forms:
         form_details = get_form_details(form)
         payload = "<script>alert('hello')</script>"
         responses = submit_form(form_details, url, payload)
         for response in responses:
             if payload in response.content.decode():
+                XSS_found = True
                 XSS_list.append(str(form_details))
-                print(colorama.Fore.RED + f"[!] XSS Detected on {url}")
-                print(colorama.Fore.YELLOW + f"[*] Form details:" + colorama.Style.RESET_ALL)
-                pprint(form_details)
+                result = f"[!] XSS Detected on {url} \n [*] Form details: \n" + pprint.pformat(form_details)
+                # print(colorama.Fore.RED + f"[!] XSS Detected on {url} ")
+                # print(colorama.Fore.YELLOW + f"[*] Form details:" + colorama.Style.RESET_ALL)
+                # pprint.pprint(form_details)
 
-    return XSS_list
+    return XSS_found, result
 
 
 
 if __name__ == "__main__":
-    colorama.init()
+    # colorama.init()
     url = "https://demo.testfire.net/feedback.jsp"
-    scan_xss(url)
-    colorama.deinit()
+    print(scan_xss(url))
+    # colorama.deinit()

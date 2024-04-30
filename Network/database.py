@@ -62,6 +62,18 @@ def check_sign_in(email, passw):
     connection.close()
     return False
 
+
+def get_username(email):
+    connection = sqlite3.connect(PATH)  # Connect to Database
+    cur = connection.cursor()  # Create a Cursor
+
+    cur.execute("SELECT username FROM users WHERE email = ?", (email,))
+    username = cur.fetchone()[0]
+
+    connection.close()
+    return username
+
+
 def print_all_database():
     connection = sqlite3.connect(PATH)  # Connect to Database
     cur = connection.cursor()  # Create a Cursor
@@ -78,4 +90,4 @@ def init_database():
     connection.close()
 
 
-print(check_sign_in("barry@allen.com", "1234"))
+print_all_database()

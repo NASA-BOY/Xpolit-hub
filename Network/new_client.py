@@ -10,10 +10,11 @@ class Client:
         self.PORT = 5559
         self.MAX_MSG_LENGTH = 4096
 
-        self.data_to_send = []
-
         self.client_socket = None
         self.connected = False
+
+        self.username = ""  # Will update on user login
+        self.email = ""  # Will update on user login
 
     def connect(self):
         try:
@@ -49,6 +50,19 @@ class Client:
 
         except Exception as e:
             print(f"Error receiving message: {e}")
+
+    # Set and get functions for client username and email
+    def set_username(self, username):
+        self.username = username
+
+    def get_username(self):
+        return self.username
+
+    def set_email(self, email):
+        self.email = email
+
+    def get_email(self):
+        return self.email
 
     def disconnect(self):
         if self.connected:

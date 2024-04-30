@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 from main_page import Ui_MainWindow
-import Security.Authentication as auth
 import Network.Commands as cmds
 from start_client import client
 
@@ -395,6 +394,8 @@ class Ui_StackedWidget(object):
         StackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(StackedWidget)
 
+        # ===ADDED CODE===
+        # BUTTONS
         self.sign_in_btn.clicked.connect(self.load_sign_in_page)
         self.sign_up_btn.clicked.connect(self.load_sign_up_page)
         self.signing_in_btn.clicked.connect(lambda: self.sign_in_check(email=self.email_input.text(),
@@ -439,6 +440,8 @@ class Ui_StackedWidget(object):
                 print(data)
                 _, status, msg = data
                 if status:
+                    client.set_username(msg)  # If the sign in is successful the msg from server is the user's username
+                    client.set_email(email)
                     self.open_main_window()
                 else:
                     self.msg_sign_in.setText("* " + msg)
@@ -453,6 +456,8 @@ class Ui_StackedWidget(object):
                 print(data)
                 _, status, msg = data
                 if status:
+                    client.set_username(username)
+                    client.set_email(email)
                     self.open_main_window()
                 else:
                     self.msg_sign_up.setText("* " + msg)

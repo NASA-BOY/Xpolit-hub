@@ -10,7 +10,7 @@ url = "https://demo.testfire.net/login.jsp"
 
 # Use Selenium to interact with the webpage
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+# options.add_argument("--headless")
 driver = webdriver.Chrome(options=options)  # Replace with your preferred browser driver
 driver.get(url)
 
@@ -25,9 +25,8 @@ for i in range(1, 50):
     text_box.send_keys(text_to_enter)
 
     # Identify the submit button element (use browser developer tools)
-    submit_button = driver.find_element("name", "btnSubmit")  # Replace with actual ID
+    submit_button = driver.find_element("name", "btnSub")  # Replace with actual ID
     submit_button.click()
-
 
     # # Retrieve the website's response (HTML content)
     # response_text = driver.page_source
