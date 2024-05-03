@@ -26,6 +26,7 @@ def get_form_details(form):
     details["action"] = action
     details["method"] = method
     details["inputs"] = inputs
+    print(inputs)
     return details
 
 
@@ -75,6 +76,6 @@ def scan_xss(url):
 
 if __name__ == "__main__":
     # colorama.init()
-    url = "https://demo.testfire.net/feedback.jsp"
+    url = "https://demo.testfire.net/login.jsp"
     print(scan_xss(url))
     # colorama.deinit()
