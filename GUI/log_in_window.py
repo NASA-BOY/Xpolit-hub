@@ -468,6 +468,7 @@ class Ui_StackedWidget(object):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.window)
         self.window.show()
+        StackedWidget.hide()
 
 
 app = QtWidgets.QApplication(sys.argv)

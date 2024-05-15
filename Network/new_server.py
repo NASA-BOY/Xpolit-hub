@@ -1,10 +1,11 @@
 import pickle
 import socket
 import threading
+from datetime import datetime
 
 import select
 import Commands as cmds
-import database as db
+from database import Database
 import Constants.Errors as errors
 
 import Constants.Vulnerabilities as vuln
@@ -134,8 +135,8 @@ def client_scan(client_url, vuln_list, client_socket, cookies_str=None):
                 msg_to_send.append((client_socket, scan_msg))
 
 
-
-
+# Create a new database instance
+db = Database()
 
 while True:
     rlist, wlist, xlist = select.select([server_socket] + client_sockets, client_sockets, [])
@@ -149,8 +150,7 @@ while True:
                 data_recv = current_socket.recv(MAX_MSG_LENGTH)
                 data = pickle.loads(data_recv)
                 print(data)
-                cmd = data[0]
-                data.pop(0)
+                cmd = data.pop(0)
 
                 if cmd == cmds.SIGN_IN_CMD:
                     email, passw = data
@@ -191,6 +191,57 @@ while True:
 
                     scan = threading.Thread(target=client_scan, args=(url, data, current_socket, client_cookies))
                     scan.start()
+
+                elif cmd == cmds.SAVE_SCAN_CMD:
+                    try:
+                        scan_id = data.pop(0)  # Get the scan id from the first item in data and remove it from data
+                        email = logged_in_users[current_socket]  # Get the client's email from the logged in dictionary
+
+                        # Make sure the scan has not already been saved by making sure the scan id doesn't exist
+                        if not db.check_scan_id_exists(email, scan_id):
+                            result = data[0]  # What's left in data would be only the scan's result for save
+
+                            # Get the current date and time
+                            current_datetime = datetime.now()
+                            # Convert the datetime object to a string in a desired format
+                            date_time = current_datetime.strftime("%Y-%m-%d %H:%M")
+
+                            # Save the given sacn result to the database
+                            db.add_new_scan_save(email, scan_id, date_time, result)
+
+                            msg_to_send.append((current_socket, [cmds.SAVE_SCAN_CMD, True, "Saved!"]))
+
+                        else:
+                            msg_to_send.append((current_socket, [cmds.SAVE_SCAN_CMD, False, errors.SCAN_ALREADY_SAVED]))
+
+                    except Exception as e:
+                        print(e)
+                        msg_to_send.append((current_socket, [cmds.SAVE_SCAN_CMD, False, errors.ERROR_SAVING_SCAN]))
+
+                elif cmd == cmds.GET_ALL_SAVED_DATES_CMD:
+                    try:
+                        email = logged_in_users[current_socket]  # Get the client's email from the logged in dictionary
+
+                        dates = db.get_all_saved_dates(email)
+                        msg_to_send.append((current_socket, [cmds.GET_ALL_SAVED_DATES_CMD, True] + dates))
+
+                    except Exception as e:
+                        print(e)
+                        msg_to_send.append((current_socket, [cmds.GET_ALL_SAVED_DATES_CMD, False, errors.ERROR_FETCHING_DATES]))
+
+                elif cmd == cmds.GET_SAVED_SCAN_CMD:
+                    try:
+                        email = logged_in_users[current_socket]  # Get the client's email from the logged in dictionary
+                        date_time = data[0]
+
+                        result = db.get_history_save(email, date_time)
+
+                        msg_to_send.append((current_socket, [cmds.GET_SAVED_SCAN_CMD, True, result]))
+
+                    except Exception as e:
+                        print(e)
+                        msg_to_send.append((current_socket, [cmds.GET_SAVED_SCAN_CMD, False, errors.ERROR_FETCHING_SCAN]))
+
 
             except ConnectionResetError:
                 # Handle connection reset by client

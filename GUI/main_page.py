@@ -1,3 +1,4 @@
+import random
 import threading
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -7,6 +8,7 @@ from start_client import client
 import Constants.Vulnerabilities as vuln
 import time
 from Constants import General as constants
+import Constants.Errors as errors
 
 
 class Ui_MainWindow(object):
@@ -655,6 +657,98 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.new_scan_page)
         self.history_page = QtWidgets.QWidget()
         self.history_page.setObjectName("history_page")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.history_page)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.history_title = QtWidgets.QLabel(self.history_page)
+        self.history_title.setEnabled(True)
+        self.history_title.setMaximumSize(QtCore.QSize(16777215, 50))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(30)
+        self.history_title.setFont(font)
+        self.history_title.setStyleSheet("")
+        self.history_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.history_title.setObjectName("history_title")
+        self.verticalLayout_3.addWidget(self.history_title)
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.date_title = QtWidgets.QLabel(self.history_page)
+        self.date_title.setEnabled(True)
+        self.date_title.setMaximumSize(QtCore.QSize(16777215, 50))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(30)
+        self.date_title.setFont(font)
+        self.date_title.setStyleSheet("")
+        self.date_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.date_title.setObjectName("date_title")
+        self.verticalLayout_4.addWidget(self.date_title)
+        self.date_combo = QtWidgets.QComboBox(self.history_page)
+        self.date_combo.setObjectName("date_combo")
+        self.date_combo.addItem("")
+        self.verticalLayout_4.addWidget(self.date_combo)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem10)
+        self.get_scan_history_btn = QtWidgets.QPushButton(self.history_page)
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(22)
+        self.get_scan_history_btn.setFont(font)
+        self.get_scan_history_btn.setStyleSheet("QPushButton{\n"
+"    border-width: 3px;\n"
+"    border-style: outset;\n"
+"    border-radius: 5px;\n"
+"    border-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
+        self.get_scan_history_btn.setObjectName("get_scan_history_btn")
+        self.verticalLayout_4.addWidget(self.get_scan_history_btn)
+        self.horizontalLayout_9.addLayout(self.verticalLayout_4)
+        self.line_3 = QtWidgets.QFrame(self.history_page)
+        self.line_3.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.line_3.sizePolicy().hasHeightForWidth())
+        self.line_3.setSizePolicy(sizePolicy)
+        self.line_3.setMinimumSize(QtCore.QSize(5, 0))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.line_3.setFont(font)
+        self.line_3.setStyleSheet("color: rgb(255, 163, 26);")
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.line_3.setLineWidth(2)
+        self.line_3.setMidLineWidth(0)
+        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_3.setObjectName("line_3")
+        self.horizontalLayout_9.addWidget(self.line_3)
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.saved_scan_result_title = QtWidgets.QLabel(self.history_page)
+        self.saved_scan_result_title.setEnabled(True)
+        self.saved_scan_result_title.setMaximumSize(QtCore.QSize(16777215, 50))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(30)
+        self.saved_scan_result_title.setFont(font)
+        self.saved_scan_result_title.setStyleSheet("")
+        self.saved_scan_result_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.saved_scan_result_title.setObjectName("saved_scan_result_title")
+        self.verticalLayout_5.addWidget(self.saved_scan_result_title)
+        self.history_scan_result = QtWidgets.QTextBrowser(self.history_page)
+        self.history_scan_result.setObjectName("history_scan_result")
+        self.verticalLayout_5.addWidget(self.history_scan_result)
+        self.horizontalLayout_9.addLayout(self.verticalLayout_5)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_9)
         self.stackedWidget.addWidget(self.history_page)
         self.horizontalLayout.addWidget(self.stackedWidget)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -670,7 +764,6 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
         # ===ADDED CODE===
         # Setting the username at the bottom to the signed-in username
         self.account_username.setText(client.get_username())
@@ -681,11 +774,14 @@ class Ui_MainWindow(object):
         # =Buttons=
         # Page passing
         self.scan_page_btn.clicked.connect(self.load_new_scan_page)
-        self.history_page_btn.clicked.connect(self.load_history_page)
 
         # Start scan
         self.result = ""
-        self.start_scan_btn.clicked.connect(self.send_scan_request)
+        self.saved_scan_id = ""
+        self.scan_id = ""
+        self.scanning = False
+        if not self.scanning:
+            self.start_scan_btn.clicked.connect(self.send_scan_request)
 
         # Select all Check box
         self.boxes = {self.xss_box: vuln.XSS, self.sql_box: vuln.SQL_INJECTION,
@@ -700,6 +796,16 @@ class Ui_MainWindow(object):
 
         # Read scan results
         self.read_scan_btn.clicked.connect(self.read_more_scan_popup)
+
+        # Save scan results
+        self.save_scan_btn.clicked.connect(self.send_save_scan_results)
+
+        # Fetch all saved dates
+        self.history_page_btn.clicked.connect(self.fetch_all_saved_dates)
+
+        # Get scan history
+        self.get_scan_history_btn.clicked.connect(self.send_scan_history_request)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -736,14 +842,17 @@ class Ui_MainWindow(object):
         self.select_all_box.setText(_translate("MainWindow", "Select All"))
         self.scan_help_btn.setText(_translate("MainWindow", "?"))
         self.start_scan_btn.setText(_translate("MainWindow", "Scan"))
+        self.history_title.setText(_translate("MainWindow", "History"))
+        self.date_title.setText(_translate("MainWindow", "Pick date"))
+        self.date_combo.setItemText(0, _translate("MainWindow", constants.DATE_COMBOBOX_MSG))
+        self.get_scan_history_btn.setText(_translate("MainWindow", "Get Result"))
+        self.saved_scan_result_title.setText(_translate("MainWindow", "Scan result"))
 
 
 # ===ADDED CODE===
     def load_new_scan_page(self):
         self.stackedWidget.setCurrentWidget(self.new_scan_page)
 
-    def load_history_page(self):
-        self.stackedWidget.setCurrentWidget(self.history_page)
 
     # Set all the checkboxes to that of the select all
     def select_all(self):
@@ -790,7 +899,89 @@ class Ui_MainWindow(object):
         msg.setText(self.result)
         msg.exec_()
 
+    def general_popup(self, title, text):
+        msg = QMessageBox()
+        msg.setWindowTitle(title)
+        msg.setText(text)
+        msg.exec_()
+
+
+    # Send the scan results back to server for saving it
+    def send_save_scan_results(self):
+        if self.scan_id != self.saved_scan_id:
+            client.send_data_list(cmds.SAVE_SCAN_CMD, [self.scan_id, self.result])
+            self.saved_scan_id = self.scan_id
+
+
+            start = time.time()
+            while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT:
+                data = client.receive_data()
+                if data is not None:
+                    if data.pop(0) == cmds.SAVE_SCAN_CMD:
+                        _, msg = data
+
+                        self.general_popup('Scan Results', msg)
+                        break
+
+
+    # Fetch all saved scan dates and time, and update the history page
+    def fetch_all_saved_dates(self):
+        # Load the history page first
+        self.stackedWidget.setCurrentWidget(self.history_page)
+
+        # Clear the date combobox options and add the default one
+        self.date_combo.clear()
+        self.date_combo.addItem(constants.DATE_COMBOBOX_MSG)
+
+        client.send_data_list(cmds.GET_ALL_SAVED_DATES_CMD, [])
+
+        start = time.time()
+        while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT:
+            data = client.receive_data()
+            if data is not None:
+                if data.pop(0) == cmds.GET_ALL_SAVED_DATES_CMD:
+                    fetched = data.pop(0)
+
+                    if fetched:
+                        # what's only left in the data are the fetched dates
+                        for date in data:
+                            self.date_combo.addItem(date)
+                    else:
+                        self.general_popup("history", data[0])
+
+                    break
+
+
+    def send_scan_history_request(self):
+        date_time = self.date_combo.currentText()
+
+        if date_time == constants.DATE_COMBOBOX_MSG:
+            self.general_popup("Date-Time", errors.NO_DATE_PICKED)
+            return
+
+        client.send_data_list(cmds.GET_SAVED_SCAN_CMD, [date_time])
+
+        start = time.time()
+        while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT:
+            data = client.receive_data()
+            if data is not None:
+                if data.pop(0) == cmds.GET_SAVED_SCAN_CMD:
+                    fetched = data.pop(0)
+
+                    if fetched:
+                        # what's only left in the data is the saved scan result
+                        result = data[0]
+                        self.history_scan_result.setText(result)
+                    else:
+                        self.general_popup("history", data[0])
+
+                    break
+
     def send_scan_request(self):
+        # Generate a random and long scan id
+        self.scan_id = str(random.randint(10000000, 99999999))
+        self.start_scan_btn.hide()
+
         self.result = ""
         self.hide_reset_scan_elements()
 
@@ -819,8 +1010,6 @@ class Ui_MainWindow(object):
             # scan_wait = threading.Thread(target=self.wait_for_scan_result, args=(vuln_list,))
             # scan_wait.start()
 
-            scan_details = {}
-
             start = time.time()
             while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT and len(vuln_list) > 0:
                 data = client.receive_data()
@@ -838,6 +1027,8 @@ class Ui_MainWindow(object):
                             msg = "Vulnerable"
                             page_vulnerable = True
 
+                            self.result += msg +"\n"
+                            self.result += "URL: " + url + "\n"
                             self.result += "-" + vuln_type + "-\n"
 
                             for form_details in data:
@@ -861,6 +1052,8 @@ class Ui_MainWindow(object):
                 print(self.result)
             else:
                 self.scan_result.append("Website secured.")
+
+        self.start_scan_btn.show()
 
 
 
