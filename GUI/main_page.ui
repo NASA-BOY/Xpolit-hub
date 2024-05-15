@@ -493,7 +493,7 @@ QPushButton:pressed{
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="welcome_page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1256,52 +1256,6 @@ QPushButton:pressed{
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="brute_force_box">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>35</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Copperplate Gothic Bold</family>
-                    <pointsize>14</pointsize>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string>Brute Force</string>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>16</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
-                  </property>
-                  <property name="autoRepeat">
-                   <bool>false</bool>
-                  </property>
-                  <property name="autoExclusive">
-                   <bool>false</bool>
-                  </property>
-                  <property name="tristate">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="Line" name="line_13">
                   <property name="enabled">
                    <bool>true</bool>
@@ -1680,7 +1634,7 @@ QPushButton:pressed{
              </widget>
             </item>
             <item>
-             <widget class="QTextBrowser" name="textBrowser"/>
+             <widget class="QTextBrowser" name="history_scan_result"/>
             </item>
            </layout>
           </item>

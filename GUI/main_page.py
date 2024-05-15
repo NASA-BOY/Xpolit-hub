@@ -1,5 +1,4 @@
 import random
-import threading
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -558,22 +557,6 @@ class Ui_MainWindow(object):
         self.cmd_injection_box.setTristate(False)
         self.cmd_injection_box.setObjectName("cmd_injection_box")
         self.verticalLayout_11.addWidget(self.cmd_injection_box)
-        self.brute_force_box = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
-        self.brute_force_box.setEnabled(True)
-        self.brute_force_box.setMinimumSize(QtCore.QSize(0, 35))
-        font = QtGui.QFont()
-        font.setFamily("Copperplate Gothic Bold")
-        font.setPointSize(14)
-        self.brute_force_box.setFont(font)
-        self.brute_force_box.setStyleSheet("")
-        self.brute_force_box.setIconSize(QtCore.QSize(16, 16))
-        self.brute_force_box.setCheckable(True)
-        self.brute_force_box.setChecked(True)
-        self.brute_force_box.setAutoRepeat(False)
-        self.brute_force_box.setAutoExclusive(False)
-        self.brute_force_box.setTristate(False)
-        self.brute_force_box.setObjectName("brute_force_box")
-        self.verticalLayout_11.addWidget(self.brute_force_box)
         self.line_13 = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
         self.line_13.setEnabled(True)
         self.line_13.setStyleSheet("color: rgb(255, 163, 26);")
@@ -781,11 +764,11 @@ class Ui_MainWindow(object):
         self.scan_id = ""
         self.scanning = False
         if not self.scanning:
-            self.start_scan_btn.clicked.connect(self.send_scan_request)
+                self.start_scan_btn.clicked.connect(self.send_scan_request)
 
         # Select all Check box
         self.boxes = {self.xss_box: vuln.XSS, self.sql_box: vuln.SQL_INJECTION,
-                      self.cmd_injection_box: vuln.CMD_INJECTION, self.brute_force_box: vuln.BRUTE_FORCE}
+                      self.cmd_injection_box: vuln.CMD_INJECTION}
         self.select_all_box.clicked.connect(self.select_all)
 
         # Cookies help
@@ -838,15 +821,15 @@ class Ui_MainWindow(object):
         self.xss_box.setText(_translate("MainWindow", "xss"))
         self.sql_box.setText(_translate("MainWindow", "SQL Injection"))
         self.cmd_injection_box.setText(_translate("MainWindow", "Command Injection"))
-        self.brute_force_box.setText(_translate("MainWindow", "Brute Force"))
         self.select_all_box.setText(_translate("MainWindow", "Select All"))
         self.scan_help_btn.setText(_translate("MainWindow", "?"))
         self.start_scan_btn.setText(_translate("MainWindow", "Scan"))
         self.history_title.setText(_translate("MainWindow", "History"))
         self.date_title.setText(_translate("MainWindow", "Pick date"))
-        self.date_combo.setItemText(0, _translate("MainWindow", constants.DATE_COMBOBOX_MSG))
+        self.date_combo.setItemText(0, _translate("MainWindow", "-pick a date to show-"))
         self.get_scan_history_btn.setText(_translate("MainWindow", "Get Result"))
         self.saved_scan_result_title.setText(_translate("MainWindow", "Scan result"))
+
 
 
 # ===ADDED CODE===
@@ -1084,6 +1067,7 @@ class Ui_MainWindow(object):
     #                 self.scan_progress_bar.setValue(100)
     #                 self.scan_result.setText(error)
     #                 break
+
 
 
 if __name__ == "__main__":

@@ -46,7 +46,7 @@ def client_scan(client_url, vuln_list, client_socket, cookies_str=None):
         # =Set up the headless browser driver=
         # Use Selenium to interact with the webpage
         options = webdriver.ChromeOptions()
-        #options.add_argument("--headless")
+        options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)  # Replace with your preferred browser driver
         driver.get(client_url)
 
