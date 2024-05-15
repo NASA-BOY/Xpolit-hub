@@ -66,7 +66,7 @@ def scan_xss(url):
                 XSS_found = True
                 XSS_list.append(str(form_details))
                 result = f"[!] XSS Detected on {url} \n [*] Form details: \n" + pprint.pformat(form_details)
-                # print(colorama.Fore.RED + f"[!] XSS Detected on {url} ")
+                # print(colorama.Fore.RED + f"[!] XSS Detected on {url} ")\
                 # print(colorama.Fore.YELLOW + f"[*] Form details:" + colorama.Style.RESET_ALL)
                 # pprint.pprint(form_details)
 

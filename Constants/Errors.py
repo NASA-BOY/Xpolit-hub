@@ -5,4 +5,5 @@ SIGN_IN_INCORRECT = "The email or password is incorrect!"
 EMAIL_EXISTS = "This email already exists!"
 PASSW_DONT_MATCH = "The passwords you have entered don't match each other!"
 INVALID_URL = "The URL you have entered is invalid"
+BAD_COOKIES = "The cookies you have entered are incorrect or invalid"
 

@@ -1,10 +1,13 @@
+import threading
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys
+from PyQt5.QtWidgets import QMessageBox
 import Network.Commands as cmds
 from start_client import client
 import Constants.Vulnerabilities as vuln
 import time
 from Constants import General as constants
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -79,7 +82,17 @@ class Ui_MainWindow(object):
         self.scan_page_btn.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.scan_page_btn.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.scan_page_btn.setAcceptDrops(False)
-        self.scan_page_btn.setStyleSheet("border-bottom-color: rgb(0, 0, 0);")
+        self.scan_page_btn.setStyleSheet("QPushButton{\n"
+"    border-style: outset;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
         self.scan_page_btn.setCheckable(False)
         self.scan_page_btn.setAutoExclusive(False)
         self.scan_page_btn.setAutoDefault(False)
@@ -102,6 +115,17 @@ class Ui_MainWindow(object):
         font.setFamily("Copperplate Gothic Bold")
         font.setPointSize(13)
         self.history_page_btn.setFont(font)
+        self.history_page_btn.setStyleSheet("QPushButton{\n"
+"    border-style: outset;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
         self.history_page_btn.setFlat(True)
         self.history_page_btn.setObjectName("history_page_btn")
         self.menu_btns.addWidget(self.history_page_btn)
@@ -120,6 +144,17 @@ class Ui_MainWindow(object):
         font.setFamily("Copperplate Gothic Bold")
         font.setPointSize(13)
         self.learn_more_page_btn.setFont(font)
+        self.learn_more_page_btn.setStyleSheet("QPushButton{\n"
+"    border-style: outset;\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
         self.learn_more_page_btn.setFlat(True)
         self.learn_more_page_btn.setObjectName("learn_more_page_btn")
         self.menu_btns.addWidget(self.learn_more_page_btn)
@@ -141,7 +176,8 @@ class Ui_MainWindow(object):
         self.settings_btn.setMinimumSize(QtCore.QSize(0, 0))
         self.settings_btn.setStyleSheet("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("imgs/resources/settings_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../../.designer/backup/imgs/resources/settings_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("imgs/resources/settings_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.settings_btn.setIcon(icon)
         self.settings_btn.setIconSize(QtCore.QSize(30, 30))
         self.settings_btn.setAutoRaise(True)
@@ -229,8 +265,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
-        spacerItem4 = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_9.addItem(spacerItem4)
         self.url_txt = QtWidgets.QLabel(self.new_scan_page)
         self.url_txt.setEnabled(True)
         self.url_txt.setMaximumSize(QtCore.QSize(16777215, 30))
@@ -249,8 +283,77 @@ class Ui_MainWindow(object):
         self.url_input.setText("")
         self.url_input.setObjectName("url_input")
         self.verticalLayout_9.addWidget(self.url_input)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_9.addItem(spacerItem5)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_9.addItem(spacerItem4)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.cookies_text = QtWidgets.QLabel(self.new_scan_page)
+        self.cookies_text.setEnabled(True)
+        self.cookies_text.setMaximumSize(QtCore.QSize(16777215, 30))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(17)
+        self.cookies_text.setFont(font)
+        self.cookies_text.setObjectName("cookies_text")
+        self.horizontalLayout_3.addWidget(self.cookies_text)
+        self.cookies_help_btn = QtWidgets.QPushButton(self.new_scan_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cookies_help_btn.sizePolicy().hasHeightForWidth())
+        self.cookies_help_btn.setSizePolicy(sizePolicy)
+        self.cookies_help_btn.setMaximumSize(QtCore.QSize(30, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.cookies_help_btn.setFont(font)
+        self.cookies_help_btn.setAutoFillBackground(False)
+        self.cookies_help_btn.setStyleSheet("QPushButton{\n"
+"    border-width: 2px;\n"
+"    border-style: outset;\n"
+"    border-radius: 5px;\n"
+"    border-color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
+        self.cookies_help_btn.setAutoDefault(False)
+        self.cookies_help_btn.setObjectName("cookies_help_btn")
+        self.horizontalLayout_3.addWidget(self.cookies_help_btn)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_3)
+        self.cookies_input = QtWidgets.QTextEdit(self.new_scan_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cookies_input.sizePolicy().hasHeightForWidth())
+        self.cookies_input.setSizePolicy(sizePolicy)
+        self.cookies_input.setMaximumSize(QtCore.QSize(16777215, 210))
+        self.cookies_input.setObjectName("cookies_input")
+        self.verticalLayout_9.addWidget(self.cookies_input)
+        self.result_line = QtWidgets.QFrame(self.new_scan_page)
+        self.result_line.setEnabled(True)
+        self.result_line.setStyleSheet("color: rgb(255, 163, 26);")
+        self.result_line.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.result_line.setLineWidth(2)
+        self.result_line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.result_line.setObjectName("result_line")
+        self.verticalLayout_9.addWidget(self.result_line)
+        self.result_text = QtWidgets.QLabel(self.new_scan_page)
+        self.result_text.setEnabled(True)
+        self.result_text.setMaximumSize(QtCore.QSize(16777215, 30))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(17)
+        self.result_text.setFont(font)
+        self.result_text.setObjectName("result_text")
+        self.verticalLayout_9.addWidget(self.result_text)
         self.scan_result = QtWidgets.QTextBrowser(self.new_scan_page)
         self.scan_result.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -260,10 +363,77 @@ class Ui_MainWindow(object):
         self.scan_result.setSizePolicy(sizePolicy)
         self.scan_result.setMinimumSize(QtCore.QSize(0, 0))
         self.scan_result.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.scan_result.setObjectName("textBrowser")
+        self.scan_result.setObjectName("scan_result")
         self.verticalLayout_9.addWidget(self.scan_result)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_9.addItem(spacerItem6)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.save_scan_btn = QtWidgets.QPushButton(self.new_scan_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.save_scan_btn.sizePolicy().hasHeightForWidth())
+        self.save_scan_btn.setSizePolicy(sizePolicy)
+        self.save_scan_btn.setMinimumSize(QtCore.QSize(120, 30))
+        self.save_scan_btn.setMaximumSize(QtCore.QSize(1000, 30))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.save_scan_btn.setFont(font)
+        self.save_scan_btn.setAutoFillBackground(False)
+        self.save_scan_btn.setStyleSheet("QPushButton{\n"
+"    border-width: 3px;\n"
+"    border-style: outset;\n"
+"    border-radius: 5px;\n"
+"    border-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
+        self.save_scan_btn.setAutoDefault(False)
+        self.save_scan_btn.setObjectName("save_scan_btn")
+        self.horizontalLayout_4.addWidget(self.save_scan_btn)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem5)
+        self.read_scan_btn = QtWidgets.QPushButton(self.new_scan_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.read_scan_btn.sizePolicy().hasHeightForWidth())
+        self.read_scan_btn.setSizePolicy(sizePolicy)
+        self.read_scan_btn.setMinimumSize(QtCore.QSize(120, 30))
+        self.read_scan_btn.setMaximumSize(QtCore.QSize(1000, 30))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.read_scan_btn.setFont(font)
+        self.read_scan_btn.setAutoFillBackground(False)
+        self.read_scan_btn.setStyleSheet("QPushButton{\n"
+"    border-width: 3px;\n"
+"    border-style: outset;\n"
+"    border-radius: 5px;\n"
+"    border-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
+        self.read_scan_btn.setAutoDefault(False)
+        self.read_scan_btn.setObjectName("read_scan_btn")
+        self.horizontalLayout_4.addWidget(self.read_scan_btn)
+        self.verticalLayout_9.addLayout(self.horizontalLayout_4)
         self.line_14 = QtWidgets.QFrame(self.new_scan_page)
         self.line_14.setEnabled(True)
         self.line_14.setStyleSheet("color: rgb(255, 163, 26);")
@@ -274,10 +444,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addWidget(self.line_14)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem7)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem6)
         self.scan_progress_bar = QtWidgets.QProgressBar(self.new_scan_page)
-        self.scan_progress_bar.setEnabled(False)
+        self.scan_progress_bar.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -290,13 +460,11 @@ class Ui_MainWindow(object):
         self.scan_progress_bar.setFont(font)
         self.scan_progress_bar.setProperty("value", 3)
         self.scan_progress_bar.setTextVisible(False)
-        self.scan_progress_bar.setObjectName("progressBar")
+        self.scan_progress_bar.setObjectName("scan_progress_bar")
         self.horizontalLayout_7.addWidget(self.scan_progress_bar)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem8)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem7)
         self.verticalLayout_9.addLayout(self.horizontalLayout_7)
-        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_9.addItem(spacerItem9)
         self.horizontalLayout_5.addLayout(self.verticalLayout_9)
         self.line_2 = QtWidgets.QFrame(self.new_scan_page)
         self.line_2.setEnabled(True)
@@ -318,8 +486,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.line_2)
         self.verticalLayout_10 = QtWidgets.QVBoxLayout()
         self.verticalLayout_10.setObjectName("verticalLayout_10")
-        spacerItem10 = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.verticalLayout_10.addItem(spacerItem10)
         self.vuln_txt = QtWidgets.QLabel(self.new_scan_page)
         self.vuln_txt.setEnabled(True)
         self.vuln_txt.setMaximumSize(QtCore.QSize(16777215, 30))
@@ -338,7 +504,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 404, 485))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 404, 506))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
@@ -374,6 +540,22 @@ class Ui_MainWindow(object):
         self.sql_box.setTristate(False)
         self.sql_box.setObjectName("sql_box")
         self.verticalLayout_11.addWidget(self.sql_box)
+        self.cmd_injection_box = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
+        self.cmd_injection_box.setEnabled(True)
+        self.cmd_injection_box.setMinimumSize(QtCore.QSize(0, 35))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(14)
+        self.cmd_injection_box.setFont(font)
+        self.cmd_injection_box.setStyleSheet("")
+        self.cmd_injection_box.setIconSize(QtCore.QSize(16, 16))
+        self.cmd_injection_box.setCheckable(True)
+        self.cmd_injection_box.setChecked(True)
+        self.cmd_injection_box.setAutoRepeat(False)
+        self.cmd_injection_box.setAutoExclusive(False)
+        self.cmd_injection_box.setTristate(False)
+        self.cmd_injection_box.setObjectName("cmd_injection_box")
+        self.verticalLayout_11.addWidget(self.cmd_injection_box)
         self.brute_force_box = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
         self.brute_force_box.setEnabled(True)
         self.brute_force_box.setMinimumSize(QtCore.QSize(0, 35))
@@ -390,22 +572,6 @@ class Ui_MainWindow(object):
         self.brute_force_box.setTristate(False)
         self.brute_force_box.setObjectName("brute_force_box")
         self.verticalLayout_11.addWidget(self.brute_force_box)
-        self.dos_box = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
-        self.dos_box.setEnabled(True)
-        self.dos_box.setMinimumSize(QtCore.QSize(0, 35))
-        font = QtGui.QFont()
-        font.setFamily("Copperplate Gothic Bold")
-        font.setPointSize(14)
-        self.dos_box.setFont(font)
-        self.dos_box.setStyleSheet("")
-        self.dos_box.setIconSize(QtCore.QSize(16, 16))
-        self.dos_box.setCheckable(True)
-        self.dos_box.setChecked(True)
-        self.dos_box.setAutoRepeat(False)
-        self.dos_box.setAutoExclusive(False)
-        self.dos_box.setTristate(False)
-        self.dos_box.setObjectName("dos_box")
-        self.verticalLayout_11.addWidget(self.dos_box)
         self.line_13 = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
         self.line_13.setEnabled(True)
         self.line_13.setStyleSheet("color: rgb(255, 163, 26);")
@@ -430,12 +596,44 @@ class Ui_MainWindow(object):
         self.select_all_box.setTristate(False)
         self.select_all_box.setObjectName("select_all_box")
         self.verticalLayout_11.addWidget(self.select_all_box)
-        spacerItem11 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_11.addItem(spacerItem11)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_11.addItem(spacerItem8)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem12)
+        self.scan_help_btn = QtWidgets.QPushButton(self.scrollAreaWidgetContents_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scan_help_btn.sizePolicy().hasHeightForWidth())
+        self.scan_help_btn.setSizePolicy(sizePolicy)
+        self.scan_help_btn.setMinimumSize(QtCore.QSize(35, 0))
+        self.scan_help_btn.setMaximumSize(QtCore.QSize(1000, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Copperplate Gothic Bold")
+        font.setPointSize(21)
+        font.setBold(True)
+        font.setWeight(75)
+        self.scan_help_btn.setFont(font)
+        self.scan_help_btn.setAutoFillBackground(False)
+        self.scan_help_btn.setStyleSheet("QPushButton{\n"
+"    border-width: 2px;\n"
+"    border-style: outset;\n"
+"    border-radius: 5px;\n"
+"    border-color: rgb(0, 0, 0);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: rgb(255, 163, 26);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"        background-color: rgb(255, 255, 255);\n"
+"}")
+        self.scan_help_btn.setAutoDefault(False)
+        self.scan_help_btn.setObjectName("scan_help_btn")
+        self.horizontalLayout_6.addWidget(self.scan_help_btn)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem9)
         self.start_scan_btn = QtWidgets.QPushButton(self.scrollAreaWidgetContents_2)
         self.start_scan_btn.setEnabled(True)
         self.start_scan_btn.setMinimumSize(QtCore.QSize(100, 35))
@@ -472,9 +670,13 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
         # ===ADDED CODE===
+        # Setting the username at the bottom to the signed-in username
         self.account_username.setText(client.get_username())
-        self.scan_progress_bar.hide()
+
+        # Hiding all the scan result related elements
+        self.hide_reset_scan_elements()
 
         # =Buttons=
         # Page passing
@@ -482,12 +684,22 @@ class Ui_MainWindow(object):
         self.history_page_btn.clicked.connect(self.load_history_page)
 
         # Start scan
+        self.result = ""
         self.start_scan_btn.clicked.connect(self.send_scan_request)
 
         # Select all Check box
         self.boxes = {self.xss_box: vuln.XSS, self.sql_box: vuln.SQL_INJECTION,
-                      self.brute_force_box: vuln.BRUTE_FORCE, self.dos_box: vuln.DOS_ATTACK}
+                      self.cmd_injection_box: vuln.CMD_INJECTION, self.brute_force_box: vuln.BRUTE_FORCE}
         self.select_all_box.clicked.connect(self.select_all)
+
+        # Cookies help
+        self.cookies_help_btn.clicked.connect(self.cookies_help_popup)
+
+        # Scan help
+        self.scan_help_btn.clicked.connect(self.scan_help_popup)
+
+        # Read scan results
+        self.read_scan_btn.clicked.connect(self.read_more_scan_popup)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -506,17 +718,23 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:36pt;\">Xploit Hub</span></p></body></html>"))
         self.scan_title.setText(_translate("MainWindow", "New Scan"))
         self.url_txt.setText(_translate("MainWindow", "URL:"))
+        self.cookies_text.setText(_translate("MainWindow", "Cookies:"))
+        self.cookies_help_btn.setText(_translate("MainWindow", "?"))
+        self.result_text.setText(_translate("MainWindow", "Result:"))
         self.scan_result.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.save_scan_btn.setText(_translate("MainWindow", "Save"))
+        self.read_scan_btn.setText(_translate("MainWindow", "Read More"))
         self.vuln_txt.setText(_translate("MainWindow", "vulnerabilities:"))
         self.xss_box.setText(_translate("MainWindow", "xss"))
         self.sql_box.setText(_translate("MainWindow", "SQL Injection"))
+        self.cmd_injection_box.setText(_translate("MainWindow", "Command Injection"))
         self.brute_force_box.setText(_translate("MainWindow", "Brute Force"))
-        self.dos_box.setText(_translate("MainWindow", "DoS"))
         self.select_all_box.setText(_translate("MainWindow", "Select All"))
+        self.scan_help_btn.setText(_translate("MainWindow", "?"))
         self.start_scan_btn.setText(_translate("MainWindow", "Scan"))
 
 
@@ -533,12 +751,61 @@ class Ui_MainWindow(object):
         for box in self.boxes.keys():
             box.setCheckState(state)
 
+    # Hide all scan result elements
+    def hide_reset_scan_elements(self):
+        self.scan_result.clear()
+        self.result_line.hide()
+        self.result_text.hide()
+        self.save_scan_btn.hide()
+        self.read_scan_btn.hide()
+        self.scan_progress_bar.hide()
+
+    def scan_help_popup(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Scan Help")
+        msg.setText("Welcome to the scan page.\n"
+                    "To start a scan enter the URL for the website page to scan\n"
+                    "and pick the vulnerabilities to scan on the website.\n"
+                    "After the scan has finished you can choose to read more about\n"
+                    "the scan results, save the scan results, or start a new scan.")
+        msg.setInformativeText("Additionally you can choose to add your cookies to\n"
+                               "the scan for pages that require that.\n"
+                               "(more on that on the cookies ? button)")
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
+
+    def cookies_help_popup(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Cookies Help")
+        msg.setText("You can insert your cookies for the scanned website (not required).\n"
+                    "using cookies will let the scanner use the website as you have it.")
+        msg.setInformativeText('You can only get valid cookies using the "EditThisCookie" Chrome extension')
+        msg.setIcon(QMessageBox.Information)
+        msg.exec_()
+
+
+    def read_more_scan_popup(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Scan Results")
+        msg.setText(self.result)
+        msg.exec_()
+
     def send_scan_request(self):
+        self.result = ""
+        self.hide_reset_scan_elements()
+
         self.scan_progress_bar.show()
+        self.result_line.show()
+        self.result_text.show()
+
         self.scan_progress_bar.setValue(3)
         url = self.url_input.text()
-        msg = [url]
+        cookies = self.cookies_input.toPlainText()
+        msg = [url, cookies]
         vuln_list = []
+
+        page_vulnerable = False
+
         for box in self.boxes.keys():
             if box.isChecked():
                 vuln_list.append(self.boxes[box])
@@ -548,26 +815,82 @@ class Ui_MainWindow(object):
 
         if url != "" and num_of_vuln > 0:
             client.send_data_list(cmds.NEW_SCAN_CMD, msg)
-            start = time.time()
 
+            # scan_wait = threading.Thread(target=self.wait_for_scan_result, args=(vuln_list,))
+            # scan_wait.start()
+
+            scan_details = {}
+
+            start = time.time()
             while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT and len(vuln_list) > 0:
                 data = client.receive_data()
                 if data is not None:
                     # Check if
                     print(data)
-                    if data[0] == cmds.NEW_SCAN_CMD and data[1]:
-                        _, _, vuln_type, vuln_found, result = data
+                    if data.pop(0) == cmds.NEW_SCAN_CMD and data.pop(0):
+                        vuln_type = data.pop(0)
+                        vuln_found = data.pop(0)
+
                         vuln_list.remove(vuln_type)
                         self.scan_progress_bar.setValue(int(round(100 - (100 / num_of_vuln) * len(vuln_list))))
-                        self.scan_result.setText(result)
-                        break
+
+                        if vuln_found:
+                            msg = "Vulnerable"
+                            page_vulnerable = True
+
+                            self.result += "-" + vuln_type + "-\n"
+
+                            for form_details in data:
+                                self.result += form_details + "\n"
+                            self.result += "\n"
+
+                        else:
+                            msg = "Secure"
+
+                        self.scan_result.append(vuln_type + ": " + msg)
                     else:
-                        _, _, error = data
+                        error = data[-1]
                         self.scan_progress_bar.setValue(100)
                         self.scan_result.setText(error)
                         break
 
-        self.scan_progress_bar.hide()
+            if page_vulnerable:
+                self.scan_result.append("Website not secured!")
+                self.save_scan_btn.show()
+                self.read_scan_btn.show()
+                print(self.result)
+            else:
+                self.scan_result.append("Website secured.")
+
+
+
+
+    # def wait_for_scan_result(self, vuln_list):
+    #     num_of_vuln = len(vuln_list)
+    #     start = time.time()
+    #     while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT and len(vuln_list) > 0:
+    #         data = client.receive_data()
+    #         if data is not None:
+    #             # Check if
+    #             print(data)
+    #             if data.pop(0) == cmds.NEW_SCAN_CMD and data.pop(0):
+    #                 vuln_type, vuln_found, details = data
+    #                 vuln_list.remove(vuln_type)
+    #                 self.scan_progress_bar.setValue(int(round(100 - (100 / num_of_vuln) * len(vuln_list))))
+    #
+    #                 if vuln_found:
+    #                     msg = "Vulnerable"
+    #                 else:
+    #                     msg = "Secure"
+    #
+    #                 print("=set bar=")
+    #                 self.scan_result.setText(vuln_type + ": " + msg)
+    #                 print("=set text=")
+    #             else:
+    #                 error = data
+    #                 self.scan_progress_bar.setValue(100)
+    #                 self.scan_result.setText(error)
+    #                 break
 
 
 if __name__ == "__main__":

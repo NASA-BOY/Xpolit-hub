@@ -1,2 +1,4 @@
-<image/src/onerror=prompt(8)>
 <script>alert("Xploit")</script>
+<script>alert("hello")</script>
+<script>alert("hub")</script>
+<image/src/onerror=prompt(8)>
