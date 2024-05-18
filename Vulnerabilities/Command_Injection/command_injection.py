@@ -9,58 +9,60 @@ def scan_cmd_injection(forms_inputs, url, driver):
     # Index for getting the form details
     index = 0
 
-    for form in forms_inputs:
-        if len(form["submit"]) > 0 and len(form["text"]) > 0:
-
-            try:
-                # Check what is the operating system
-                info = builtwith.parse(url)
-                op_system = info["operating-systems"]
-                if op_system == ['Windows Server']:
-                    payloads = pay.win_payloads
-                else:
-                    payloads = pay.unix_payloads
-
-            # If unable to find out the website operating system then try for both
-            except KeyError:
-                payloads = pay.win_payloads + pay.unix_payloads
-
-            for payload in payloads:
-
-                # Separate the command payload and the corresponding response for that command
-                cmd_payload, response = payload
-
-                # Make sure that the original page is open
-                if driver.current_url != url:
-                    driver.get(url)
-
-                for input_txt in form["text"]:
-                    # Type in payload to all the text inputs
-                    input_type, value = input_txt
-                    text_box = driver.find_element(input_type, value)
-                    text_box.clear()
-                    text_box.send_keys(cmd_payload)
-
-                for submit_input in form["submit"]:
-                    # Submit the payload by clicking the submit button
-                    input_type, value = submit_input
-                    submit_button = driver.find_element(input_type, value)
-                    submit_button.click()
+    try:
+        for form in forms_inputs:
+            if len(form["submit"]) > 0 and len(form["text"]) > 0:
 
                 try:
-                    # Get the page source
-                    page_source = driver.page_source
-                    print(page_source)
-                    if response in page_source:
-                        vuln_forms_index.append(index)
-                        break
+                    # Check what is the operating system
+                    info = builtwith.parse(url)
+                    op_system = info["operating-systems"]
+                    if op_system == ['Windows Server']:
+                        payloads = pay.win_payloads
+                    else:
+                        payloads = pay.unix_payloads
 
-                except:
-                    pass
+                # If unable to find out the website operating system then try for both
+                except KeyError:
+                    payloads = pay.win_payloads + pay.unix_payloads
 
-        # Increase the index for the next run
-        index += 1
+                for payload in payloads:
 
+                    # Separate the command payload and the corresponding response for that command
+                    cmd_payload, response = payload
+
+                    # Make sure that the original page is open
+                    if driver.current_url != url:
+                        driver.get(url)
+
+                    for input_txt in form["text"]:
+                        # Type in payload to all the text inputs
+                        input_type, value = input_txt
+                        text_box = driver.find_element(input_type, value)
+                        text_box.clear()
+                        text_box.send_keys(cmd_payload)
+
+                    for submit_input in form["submit"]:
+                        # Submit the payload by clicking the submit button
+                        input_type, value = submit_input
+                        submit_button = driver.find_element(input_type, value)
+                        submit_button.click()
+
+                    try:
+                        # Get the page source
+                        page_source = driver.page_source
+                        print(page_source)
+                        if response in page_source:
+                            vuln_forms_index.append(index)
+                            break
+
+                    except:
+                        pass
+
+            # Increase the index for the next run
+            index += 1
+    except Exception as e:
+        print(e)
 
     # Return True for vulnerable if the vulnerable forms list is not empty and return the list
     return len(vuln_forms_index) > 0, vuln_forms_index

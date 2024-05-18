@@ -70,69 +70,76 @@ def client_scan(client_url, vuln_list, client_socket, cookies_str=None):
 
                 # Refresh the page to apply the cookies
                 driver.refresh()
-        except:
+        except Exception as e:
+            print(e)
             msg_to_send.append((client_socket, [cmds.NEW_SCAN_CMD, False, errors.BAD_COOKIES]))
             return
 
-        for vuln_request in vuln_list:
-            # make sure that the web driver is on the right page given by the client
-            driver.get(client_url)
+        try:
+            for vuln_request in vuln_list:
+                # make sure that the web driver is on the right page given by the client
+                driver.get(client_url)
 
-            # Reset the scan message, add the appropriate command and add true for no errors
-            scan_msg = [cmds.NEW_SCAN_CMD, True]
-
-
-            # XSS vulnerability scan
-            if vuln_request == vuln.XSS:
-                # Add the type of vulnerability to the scan message
-                scan_msg.append(vuln.XSS)
-
-                vuln_found, forms_index = Vulnerabilities.XSS.XSS_selenium.scan_xss(forms_inputs, client_url, driver)
-
-                # Add to the scan message weather an XSS vulnerability has been found on the URL
-                scan_msg.append(vuln_found)
-
-                # Add every vulnerable form detail to the scan message using it's given index
-                for form_index in forms_index:
-                    scan_msg.append(forms_details[form_index])
-
-                # Add the scan message to be sent back to the client
-                msg_to_send.append((client_socket, scan_msg))
+                # Reset the scan message, add the appropriate command and add true for no errors
+                scan_msg = [cmds.NEW_SCAN_CMD, True]
 
 
-            # SQL Injection vulnerability scan
-            elif vuln_request == vuln.SQL_INJECTION:
-                # Add the type of vulnerability to the scan message
-                scan_msg.append(vuln.SQL_INJECTION)
+                # XSS vulnerability scan
+                if vuln_request == vuln.XSS:
+                    # Add the type of vulnerability to the scan message
+                    scan_msg.append(vuln.XSS)
 
-                vuln_found, forms_index = Vulnerabilities.SQL.SQL_selenium.scan_sql(forms_inputs, client_url, driver)
+                    vuln_found, forms_index = Vulnerabilities.XSS.XSS_selenium.scan_xss(forms_inputs, client_url, driver)
 
-                # Add to the scan message weather an SQL Injection vulnerability has been found on the URL
-                scan_msg.append(vuln_found)
+                    # Add to the scan message weather an XSS vulnerability has been found on the URL
+                    scan_msg.append(vuln_found)
 
-                # Add every vulnerable form detail to the scan message using it's given index
-                for form_index in forms_index:
-                    scan_msg.append(forms_details[form_index])
+                    # Add every vulnerable form detail to the scan message using it's given index
+                    for form_index in forms_index:
+                        scan_msg.append(forms_details[form_index])
 
-                # Add the scan message to be sent back to the client
-                msg_to_send.append((client_socket, scan_msg))
+                    # Add the scan message to be sent back to the client
+                    msg_to_send.append((client_socket, scan_msg))
 
 
-            # Command Injection vulnerability scan
-            elif vuln_request == vuln.CMD_INJECTION:
-                # Add the type of vulnerability to the scan message
-                scan_msg.append(vuln.CMD_INJECTION)
+                # SQL Injection vulnerability scan
+                elif vuln_request == vuln.SQL_INJECTION:
+                    # Add the type of vulnerability to the scan message
+                    scan_msg.append(vuln.SQL_INJECTION)
 
-                vuln_found, forms_index = Vulnerabilities.Command_Injection.command_injection.scan_cmd_injection(forms_inputs, client_url, driver)
-                # Add to the scan message weather a Command Injection vulnerability has been found on the URL
-                scan_msg.append(vuln_found)
+                    vuln_found, forms_index = Vulnerabilities.SQL.SQL_selenium.scan_sql(forms_inputs, client_url, driver)
 
-                # Add every vulnerable form detail to the scan message using it's given index
-                for form_index in forms_index:
-                    scan_msg.append(forms_details[form_index])
+                    # Add to the scan message weather an SQL Injection vulnerability has been found on the URL
+                    scan_msg.append(vuln_found)
 
-                # Add the scan message to be sent back to the client
-                msg_to_send.append((client_socket, scan_msg))
+                    # Add every vulnerable form detail to the scan message using it's given index
+                    for form_index in forms_index:
+                        scan_msg.append(forms_details[form_index])
+
+                    # Add the scan message to be sent back to the client
+                    msg_to_send.append((client_socket, scan_msg))
+
+
+                # Command Injection vulnerability scan
+                elif vuln_request == vuln.CMD_INJECTION:
+                    # Add the type of vulnerability to the scan message
+                    scan_msg.append(vuln.CMD_INJECTION)
+
+                    vuln_found, forms_index = Vulnerabilities.Command_Injection.command_injection.scan_cmd_injection(forms_inputs, client_url, driver)
+                    # Add to the scan message weather a Command Injection vulnerability has been found on the URL
+                    scan_msg.append(vuln_found)
+
+                    # Add every vulnerable form detail to the scan message using it's given index
+                    for form_index in forms_index:
+                        scan_msg.append(forms_details[form_index])
+
+                    # Add the scan message to be sent back to the client
+                    msg_to_send.append((client_socket, scan_msg))
+
+        except Exception as e:
+            print(e)
+
+        driver.quit()
 
 
 # Create a new database instance
