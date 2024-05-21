@@ -7,7 +7,7 @@ import Network.protocols as protocols
 class Client:
 
     def __init__(self):
-        self.IP = "127.0.0.1"
+        self.IP = "10.0.0.68"
         self.PORT = 5559
         self.MAX_MSG_LENGTH = 4096
 

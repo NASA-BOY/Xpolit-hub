@@ -53,7 +53,12 @@ def client_scan(client_url, vuln_list, client_socket, cookies_str=None):
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         driver = webdriver.Chrome(options=options)  # Replace with your preferred browser driver
-        driver.get(client_url)
+
+        try:
+            driver.get(client_url)
+        except Exception as e:
+            print(e)
+            msg_to_send.append((client_socket, [cmds.NEW_SCAN_CMD, False, errors.INVALID_URL]))
 
         # Load an actual cookies dictionary for the cookies string received
         if cookies_str != "":
