@@ -1,4 +1,4 @@
-from Network.new_client import Client
+from Network.client import Client
 
 
 client = Client()

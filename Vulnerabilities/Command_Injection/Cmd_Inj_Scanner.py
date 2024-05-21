@@ -1,4 +1,3 @@
-import time
 import builtwith
 import Vulnerabilities.Command_Injection.payloads as pay
 
@@ -67,62 +66,3 @@ def scan_cmd_injection(forms_inputs, url, driver):
     # Return True for vulnerable if the vulnerable forms list is not empty and return the list
     return len(vuln_forms_index) > 0, vuln_forms_index
 
-#
-# # ======================================
-#
-# url = "http://127.0.0.2/dvwa/vulnerabilities/exec/"
-#
-# # Use Selenium to interact with the webpage
-# options = webdriver.ChromeOptions()
-# # options.add_argument("--headless")
-# driver = webdriver.Chrome(options=options)  # Replace with your preferred browser driver
-# driver.get(url)
-#
-# cookies_str = """
-#     [
-# {
-#     "domain": "127.0.0.2",
-#     "expirationDate": 1715641612.847073,
-#     "hostOnly": true,
-#     "httpOnly": true,
-#     "name": "PHPSESSID",
-#     "path": "/",
-#     "sameSite": "strict",
-#     "secure": false,
-#     "session": false,
-#     "storeId": "0",
-#     "value": "km24bjtlg2ntpir2u00aehus5q",
-#     "id": 1
-# },
-# {
-#     "domain": "127.0.0.2",
-#     "hostOnly": true,
-#     "httpOnly": true,
-#     "name": "security",
-#     "path": "/",
-#     "sameSite": "unspecified",
-#     "secure": false,
-#     "session": true,
-#     "storeId": "0",
-#     "value": "impossible",
-#     "id": 2
-# }
-# ]
-#     """
-#
-# cookies = get_cookies.load_cookies_from_string(cookies_str)
-#
-# if cookies is not None:
-#     # Add each cookie to the WebDriver
-#     for name, value in cookies.items():
-#         cookie = {'name': name, 'value': value}
-#         driver.add_cookie(cookie)
-#
-#     # Refresh the page to apply the cookies
-#     driver.refresh()
-#
-#     driver.get(url)
-#
-# forms_inputs = scan_page.get_all_inputs(url, cookies)
-#
-# scan_cmd_injection(forms_inputs=forms_inputs, url=url, driver=driver)

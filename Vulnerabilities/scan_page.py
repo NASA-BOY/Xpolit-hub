@@ -2,7 +2,6 @@ import pprint
 import requests
 from bs4 import BeautifulSoup as bs
 from selenium.webdriver.common.by import By
-import json
 
 accepted_input_types = ["text", "submit", "password"]
 
@@ -59,8 +58,3 @@ def get_all_inputs(url, cookies=None):
     print(forms_inputs)
     return forms_inputs, forms_details
 
-
-#cookies = get_cookies.load_cookies_from_string()
-get_all_inputs("https://demo.testfire.net/login.jsp")
-
-# [{'text': [('name', 'query')], 'submit': []}, {'text': [('name', 'name'), ('name', 'email_addr'), ('name', 'subject')], 'submit': [('name', 'submit')]}]

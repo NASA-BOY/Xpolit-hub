@@ -1,13 +1,17 @@
 import os
 
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import UnexpectedAlertPresentException, TimeoutException, NoAlertPresentException
 
-def get_sql_payloads(file):
+
+def get_xss_payloads(file):
     with open(file, "r") as myfile:
         data = myfile.read().splitlines()
     return data
 
 
-def scan_sql(forms_inputs, url, driver):
+def scan_xss(forms_inputs, url, driver):
     # List of the vulnerable forms index
     vuln_forms_index = []
     # Index for getting the form details
@@ -18,7 +22,7 @@ def scan_sql(forms_inputs, url, driver):
     payloads_path = os.path.join(current_directory, "payloads.txt")
 
     # get all the XSS payloads
-    payloads = get_sql_payloads(payloads_path)
+    payloads = get_xss_payloads(payloads_path)
 
     try:
         for form in forms_inputs:
@@ -36,13 +40,6 @@ def scan_sql(forms_inputs, url, driver):
                         text_box.clear()
                         text_box.send_keys(payload)
 
-                    for input_pass in form["password"]:
-                        # Type in payload to all the text inputs
-                        input_type, value = input_pass
-                        text_box = driver.find_element(input_type, value)
-                        text_box.clear()
-                        text_box.send_keys(payload)
-
                     for submit_input in form["submit"]:
                         # Submit the payload by clicking the submit button
                         input_type, value = submit_input
@@ -50,13 +47,13 @@ def scan_sql(forms_inputs, url, driver):
                         submit_button.click()
 
                     try:
-                        # Get the page source
-                        page_source = driver.page_source
-                        if "error" in page_source:
-                            vuln_forms_index.append(index)
-                            break
+                        WebDriverWait(driver=driver, timeout=0.5).until(EC.alert_is_present())
+                        alert = driver.switch_to.alert
+                        alert.accept()
+                        vuln_forms_index.append(index)
+                        break
 
-                    except:
+                    except TimeoutException:
                         pass
 
             # Increase the index for the next run
@@ -68,9 +65,3 @@ def scan_sql(forms_inputs, url, driver):
     # Return True for vulnerable if the vulnerable forms list is not empty and return the list
     return len(vuln_forms_index) > 0, vuln_forms_index
 
-#
-# url = "http://localhost/dvwa/vulnerabilities/sqli/"
-# cookiess = get_cookies.load_cookies_from_string()
-# forms_inputs = scan_page.get_all_inputs(url, cookiess)
-#
-# scan_sql(forms_inputs, url, cookiess)

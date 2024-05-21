@@ -413,7 +413,7 @@ class Ui_StackedWidget(object):
         self.sign_in_btn.setText(_translate("StackedWidget", "Sign In"))
         self.sign_up_btn.setText(_translate("StackedWidget", "Sign Up"))
         self.label_sign_in.setText(_translate("StackedWidget", "Sign In"))
-        self.Email.setText(_translate("StackedWidget", "Email/username:"))
+        self.Email.setText(_translate("StackedWidget", "Email"))
         self.Pass.setText(_translate("StackedWidget", "Password"))
         self.msg_sign_in.setText(_translate("StackedWidget", "*"))
         self.signing_in_btn.setText(_translate("StackedWidget", "Sign In"))
@@ -475,6 +475,7 @@ app = QtWidgets.QApplication(sys.argv)
 StackedWidget = QtWidgets.QStackedWidget()
 ui = Ui_StackedWidget()
 ui.setupUi(StackedWidget)
+
 
 def start():
     StackedWidget.show()

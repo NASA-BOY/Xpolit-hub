@@ -1040,36 +1040,6 @@ class Ui_MainWindow(object):
 
 
 
-
-    # def wait_for_scan_result(self, vuln_list):
-    #     num_of_vuln = len(vuln_list)
-    #     start = time.time()
-    #     while time.time() - start < constants.RESPONSE_WAIT_TIMEOUT and len(vuln_list) > 0:
-    #         data = client.receive_data()
-    #         if data is not None:
-    #             # Check if
-    #             print(data)
-    #             if data.pop(0) == cmds.NEW_SCAN_CMD and data.pop(0):
-    #                 vuln_type, vuln_found, details = data
-    #                 vuln_list.remove(vuln_type)
-    #                 self.scan_progress_bar.setValue(int(round(100 - (100 / num_of_vuln) * len(vuln_list))))
-    #
-    #                 if vuln_found:
-    #                     msg = "Vulnerable"
-    #                 else:
-    #                     msg = "Secure"
-    #
-    #                 print("=set bar=")
-    #                 self.scan_result.setText(vuln_type + ": " + msg)
-    #                 print("=set text=")
-    #             else:
-    #                 error = data
-    #                 self.scan_progress_bar.setValue(100)
-    #                 self.scan_result.setText(error)
-    #                 break
-
-
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

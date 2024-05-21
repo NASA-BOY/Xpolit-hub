@@ -109,7 +109,7 @@ class Database:
     def create_history_table(self, connection):
         cur = connection.cursor()
         query = """CREATE TABLE history (
-                email TEXT,
+                email TEXT PRIMARY KEY,
                 scan_id TEXT,
                 date TEXT,
                 saved TEXT
@@ -184,20 +184,3 @@ class Database:
 
         connection.close()
 
-
-# db = Database()
-#
-# # Get the current date and time
-# current_datetime = datetime.now()
-# # Convert the datetime object to a string in a desired format
-# curr_date = current_datetime.strftime("%Y-%m-%d %H:%M")
-#
-# all_dates = db.get_all_saved_dates("admin")
-# print(all_dates)
-#
-# for one_date in all_dates:
-#     print(db.get_history_save("admin", one_date[0]))
-#
-# print(db.check_scan_id_exists("admin", "17567563"))
-#
-# # db.add_new_scan_save("admin", "17567563", curr_date, "This really is the final save!")
